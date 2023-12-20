@@ -70,51 +70,39 @@ function writePassword() {
     return;
   }
 
+  passPieces.passLength = theLength;
   passwordLengthElement.textContent = parseInt(theLength);
-  console.log(theLength);
 
-  useLower = window.confirm("Do you want lower case letters?");
-  useUpper = window.confirm("Do you want UPPER case letters?");
-  useNumbers = window.confirm("Do you want to use numbers?");
-  useSymbols = window.confirm("Do you want to use Symbols? #$%&");
-
-  console.log(useLower + " : " + useUpper + " : " + useNumbers + " : " + useSymbols);
+  useLower = window.confirm("Do you want lower case letters? Cancel for NO.");
+  useUpper = window.confirm("Do you want UPPER case letters? Cancel for NO.");
+  useNumbers = window.confirm("Do you want to use numbers? Cancel for NO.");
+  useSymbols = window.confirm("Do you want to use Symbols? Cancel for NO.");
 
   if(useLower === false && useUpper === false && useNumbers === false && useSymbols === false)  {
-    var emptyConfirm = window.confirm("You did not select any characters, would you like to start over?");
-    if(emptyConfirm)  {
-
-    }
+    var emptyConfirm = window.confirm("You did not select any characters, please make at least one selection.");
+    return;
   }
 
-  var password = generatePassword(false);
+  var password = generatePassword();
   var passwordText = document.querySelector("#password");
   passwordText.value = password;
 }
 
+//Second option to generate password with all Default Settings
 const writePasswordClean = () => {
   passwordLengthElement.textContent = parseInt(passPieces.passLength);
-  var password = generatePassword(true);
+  var password = generatePassword();
   var passwordText = document.querySelector("#password");
   passwordText.value = password;
 }
 
-const generatePassword = (x) => {
-  var addPass = "";
-  var useLength = 0;
+const generatePassword = () => {
+  var addPassword = "";
+  //Received help on this from W3 Schools and Stack Overflow to point me in the right direction for Object.keys to get an array of keys
   var pLength = Object.keys(passPieces).length;
 
-  if(x === true)  {
-    useLength = passPieces.passLength;
-  } else {
-    useLength = theLength;
-  }
-  //Received help on this from W3 Schools and Stack Overflow to point me in the right direction for Object.keys to get an array of keys
-  
-
-  for(let index = 0; index < useLength; index++) {
+  for(let index = 0; index < passPieces.passLength; index++) {
     var roll = Math.floor(Math.random() * pLength);
-    console.log(roll);
 
     if(roll === 0)  {
       index--;
@@ -127,19 +115,19 @@ const generatePassword = (x) => {
           //Change to lower case randomly
           var letter = passPieces.upperLetters[Math.floor(Math.random() * passPieces.upperLetters.length)];
           letter = letter.toLowerCase();
-          addPass += letter;
+          addPassword += letter;
         } else {
           //Add Upper Case Letter
-          addPass += passPieces.upperLetters[Math.floor(Math.random() * passPieces.upperLetters.length)];
+          addPassword += passPieces.upperLetters[Math.floor(Math.random() * passPieces.upperLetters.length)];
         }
       } else if(useLower) {
           //ONLY LOWER CASE
           var letter = passPieces.upperLetters[Math.floor(Math.random() * passPieces.upperLetters.length)];
           letter = letter.toLowerCase();
-          addPass += letter;
+          addPassword += letter;
       } else if(useUpper) {
           //ONLY UPPER CASE
-          addPass += passPieces.upperLetters[Math.floor(Math.random() * passPieces.upperLetters.length)];
+          addPassword += passPieces.upperLetters[Math.floor(Math.random() * passPieces.upperLetters.length)];
       } else if(useLower === false && useUpper === false) {
         index--;
       }
@@ -148,7 +136,7 @@ const generatePassword = (x) => {
 
       //Numbers
       if(useNumbers)  {
-        addPass += passPieces.numbers[Math.floor(Math.random() * passPieces.numbers.length)];
+        addPassword += passPieces.numbers[Math.floor(Math.random() * passPieces.numbers.length)];
       } else {
         index--;
       }
@@ -157,7 +145,7 @@ const generatePassword = (x) => {
 
       //Special Chars
       if(useSymbols)  {
-        addPass += passPieces.symbols[Math.floor(Math.random() * passPieces.symbols.length)];
+        addPassword += passPieces.symbols[Math.floor(Math.random() * passPieces.symbols.length)];
       } else {
         index--;
       }
@@ -165,7 +153,7 @@ const generatePassword = (x) => {
     }
   }
 
-  return addPass;
+  return addPassword;
 }
 
 // Add event listener to generate button
