@@ -60,7 +60,6 @@ const DecreasePasswordLength = () => {
   passwordLengthElement.textContent = pLength;
 }
 
-
 // Write password to the #password input
 
 function writePassword() {
