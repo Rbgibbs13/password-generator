@@ -129,6 +129,7 @@ const generatePassword = () => {
           //ONLY UPPER CASE
           addPassword += passPieces.upperLetters[Math.floor(Math.random() * passPieces.upperLetters.length)];
       } else if(useLower === false && useUpper === false) {
+        //Strict comparison to make SUUUUURE that we are both false
         index--;
       }
       
