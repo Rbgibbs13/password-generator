@@ -1,5 +1,5 @@
 // Assignment code here
-let passPieces = {
+let passwordComponents = {
   passLength: 12,
   upperLetters: ["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"],
   numbers: ["0","1","2","3","4","5","6","7","8","9"],
@@ -36,27 +36,27 @@ const ChangePasswordLength = () => {
     num = maxLength;
   }
 
-  passPieces.passLength = num;
+  passwordComponents.passLength = num;
   passwordLengthElement.textContent = num;
 }
 
 const IncreasePasswordLength = () => {
-  var pLength = passPieces.passLength +1;
+  var pLength = passwordComponents.passLength +1;
   if(pLength >= maxLength)  {
     pLength = maxLength;
   }
 
-  passPieces.passLength = pLength;
+  passwordComponents.passLength = pLength;
   passwordLengthElement.textContent = pLength;
 }
 
 const DecreasePasswordLength = () => {
-  var pLength = passPieces.passLength -1;
+  var pLength = passwordComponents.passLength -1;
   if(pLength <= minLength)  {
     pLength = minLength;
   }
 
-  passPieces.passLength = pLength;
+  passwordComponents.passLength = pLength;
   passwordLengthElement.textContent = pLength;
 }
 
@@ -70,7 +70,7 @@ function writePassword() {
     return;
   }
 
-  passPieces.passLength = theLength;
+  passwordComponents.passLength = theLength;
   passwordLengthElement.textContent = parseInt(theLength);
 
   useLower = window.confirm("Do you want lower case letters? Cancel for NO.");
@@ -90,7 +90,7 @@ function writePassword() {
 
 //Second option to generate password with all Default Settings
 const writePasswordClean = () => {
-  passwordLengthElement.textContent = parseInt(passPieces.passLength);
+  passwordLengthElement.textContent = parseInt(passwordComponents.passLength);
   var password = generatePassword();
   var passwordText = document.querySelector("#password");
   passwordText.value = password;
@@ -99,9 +99,9 @@ const writePasswordClean = () => {
 const generatePassword = () => {
   var addPassword = "";
   //Received help on this from W3 Schools and Stack Overflow to point me in the right direction for Object.keys to get an array of keys
-  var pLength = Object.keys(passPieces).length;
+  var pLength = Object.keys(passwordComponents).length;
 
-  for(let index = 0; index < passPieces.passLength; index++) {
+  for(let index = 0; index < passwordComponents.passLength; index++) {
     var roll = Math.floor(Math.random() * pLength);
 
     if(roll === 0)  {
@@ -113,21 +113,21 @@ const generatePassword = () => {
         var toLower = Math.random();
         if(toLower < 0.5) {
           //Change to lower case randomly
-          var letter = passPieces.upperLetters[Math.floor(Math.random() * passPieces.upperLetters.length)];
+          var letter = passwordComponents.upperLetters[Math.floor(Math.random() * passwordComponents.upperLetters.length)];
           letter = letter.toLowerCase();
           addPassword += letter;
         } else {
           //Add Upper Case Letter
-          addPassword += passPieces.upperLetters[Math.floor(Math.random() * passPieces.upperLetters.length)];
+          addPassword += passwordComponents.upperLetters[Math.floor(Math.random() * passwordComponents.upperLetters.length)];
         }
       } else if(useLower) {
           //ONLY LOWER CASE
-          var letter = passPieces.upperLetters[Math.floor(Math.random() * passPieces.upperLetters.length)];
+          var letter = passwordComponents.upperLetters[Math.floor(Math.random() * passwordComponents.upperLetters.length)];
           letter = letter.toLowerCase();
           addPassword += letter;
       } else if(useUpper) {
           //ONLY UPPER CASE
-          addPassword += passPieces.upperLetters[Math.floor(Math.random() * passPieces.upperLetters.length)];
+          addPassword += passwordComponents.upperLetters[Math.floor(Math.random() * passwordComponents.upperLetters.length)];
       } else if(useLower === false && useUpper === false) {
         //Strict comparison to make SUUUUURE that we are both false
         index--;
@@ -137,7 +137,7 @@ const generatePassword = () => {
 
       //Numbers
       if(useNumbers)  {
-        addPassword += passPieces.numbers[Math.floor(Math.random() * passPieces.numbers.length)];
+        addPassword += passwordComponents.numbers[Math.floor(Math.random() * passwordComponents.numbers.length)];
       } else {
         index--;
       }
@@ -146,7 +146,7 @@ const generatePassword = () => {
 
       //Special Chars
       if(useSymbols)  {
-        addPassword += passPieces.symbols[Math.floor(Math.random() * passPieces.symbols.length)];
+        addPassword += passwordComponents.symbols[Math.floor(Math.random() * passwordComponents.symbols.length)];
       } else {
         index--;
       }
