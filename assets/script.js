@@ -19,15 +19,11 @@ let useSymbols = true;
 // Get references to the #generate element
 var generateBtn = document.querySelector("#generate");
 var cleanBtn = document.querySelector("#cleanGenerate");
-var setPassBtn = document.querySelector("#passLength");
-
-var increaseBtn = document.querySelector("#increaseLength");
-var decreaseBtn = document.querySelector("#decreaseLength");
-
+var setPassBtn = document.querySelector("#setPassLength");
 var passwordLengthElement = document.getElementById("passwordLength");
 
 const ChangePasswordLength = () => {
-  var inputValue = document.getElementById("passLength").value;
+  var inputValue = document.getElementById("setPassLength").value;
   var num = parseInt(inputValue);
 
   if(num <= minLength)  {
@@ -36,28 +32,9 @@ const ChangePasswordLength = () => {
     num = maxLength;
   }
 
+  document.getElementById("setPassLength").value = num;
   passwordComponents.passLength = num;
   passwordLengthElement.textContent = num;
-}
-
-const IncreasePasswordLength = () => {
-  var pLength = passwordComponents.passLength +1;
-  if(pLength >= maxLength)  {
-    pLength = maxLength;
-  }
-
-  passwordComponents.passLength = pLength;
-  passwordLengthElement.textContent = pLength;
-}
-
-const DecreasePasswordLength = () => {
-  var pLength = passwordComponents.passLength -1;
-  if(pLength <= minLength)  {
-    pLength = minLength;
-  }
-
-  passwordComponents.passLength = pLength;
-  passwordLengthElement.textContent = pLength;
 }
 
 // Write password to the #password input
@@ -133,23 +110,19 @@ const generatePassword = () => {
       }
       
     } else if(roll === 2) {
-
       //Numbers
       if(useNumbers)  {
         addPassword += passwordComponents.numbers[Math.floor(Math.random() * passwordComponents.numbers.length)];
       } else {
         index--;
       }
-      
     } else if(roll === 3) {
-
       //Special Chars
       if(useSymbols)  {
         addPassword += passwordComponents.symbols[Math.floor(Math.random() * passwordComponents.symbols.length)];
       } else {
         index--;
       }
-
     }
   }
 
@@ -159,7 +132,5 @@ const generatePassword = () => {
 // Add event listener to generate button
 generateBtn.addEventListener("click", writePassword);
 cleanBtn.addEventListener("click", writePasswordClean);
-increaseBtn.addEventListener("click", IncreasePasswordLength);
-decreaseBtn.addEventListener("click", DecreasePasswordLength);
 setPassBtn.addEventListener("input", ChangePasswordLength);
 
